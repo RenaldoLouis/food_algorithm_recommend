@@ -12,20 +12,20 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _registerFormKey = GlobalKey<FormState>();
+
+  final _nameTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  final _focusName = FocusNode();
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
+
+  bool _isProcessing = false;
+
   @override
   Widget build(BuildContext context) {
-    final _registerFormKey = GlobalKey<FormState>();
-
-    final _nameTextController = TextEditingController();
-    final _emailTextController = TextEditingController();
-    final _passwordTextController = TextEditingController();
-
-    final _focusName = FocusNode();
-    final _focusEmail = FocusNode();
-    final _focusPassword = FocusNode();
-
-    bool _isProcessing = false;
-
     return GestureDetector(
       onTap: () {
         _focusName.unfocus();

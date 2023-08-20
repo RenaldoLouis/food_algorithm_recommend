@@ -13,143 +13,138 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
+
+  bool _isProcessing = false;
+
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-
-    final _emailTextController = TextEditingController();
-    final _passwordTextController = TextEditingController();
-
-    final _focusEmail = FocusNode();
-    final _focusPassword = FocusNode();
-
-    bool _isProcessing = false;
-
     return GestureDetector(
       onTap: () {
         _focusEmail.unfocus();
         _focusPassword.unfocus();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Firebase Authentication'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
-                child: Text(
-                  'Login',
-                  style: Theme.of(context).textTheme.headline1,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 24.0),
+              child: Text(
+                'Login',
+                style: Theme.of(context).textTheme.displayLarge,
               ),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      controller: _emailTextController,
-                      focusNode: _focusEmail,
-                      validator: (value) => Validator.validateEmail(
-                        email: value,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        errorBorder: UnderlineInputBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                          ),
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: _emailTextController,
+                    focusNode: _focusEmail,
+                    validator: (value) => Validator.validateEmail(
+                      email: value,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                      errorBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
                         ),
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    TextFormField(
-                      controller: _passwordTextController,
-                      focusNode: _focusPassword,
-                      obscureText: true,
-                      validator: (value) => Validator.validatePassword(
-                        password: value,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        errorBorder: UnderlineInputBorder(
-                          borderRadius: BorderRadius.circular(6.0),
-                          borderSide: BorderSide(
-                            color: Colors.red,
-                          ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextFormField(
+                    controller: _passwordTextController,
+                    focusNode: _focusPassword,
+                    obscureText: true,
+                    validator: (value) => Validator.validatePassword(
+                      password: value,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      errorBorder: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
                         ),
                       ),
                     ),
-                    SizedBox(height: 24.0),
-                    _isProcessing
-                        ? CircularProgressIndicator()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    _focusEmail.unfocus();
-                                    _focusPassword.unfocus();
+                  ),
+                  const SizedBox(height: 24.0),
+                  _isProcessing
+                      ? const CircularProgressIndicator()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  _focusEmail.unfocus();
+                                  _focusPassword.unfocus();
 
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        _isProcessing = true;
-                                      });
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      _isProcessing = true;
+                                    });
 
-                                      User? user = await FireAuth
-                                          .signInUsingEmailPassword(
-                                        email: _emailTextController.text,
-                                        password: _passwordTextController.text,
-                                      );
-
-                                      setState(() {
-                                        _isProcessing = false;
-                                      });
-
-                                      if (user != null) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Profile(user: user),
-                                          ),
-                                        );
-                                      }
-                                    }
-                                  },
-                                  child: Text(
-                                    'Sign In',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 24.0),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => Register(),
-                                      ),
+                                    User? user =
+                                        await FireAuth.signInUsingEmailPassword(
+                                      email: _emailTextController.text,
+                                      password: _passwordTextController.text,
                                     );
-                                  },
-                                  child: const Text(
-                                    'Register',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+
+                                    setState(() {
+                                      _isProcessing = false;
+                                    });
+
+                                    if (user != null) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Profile(user: user),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                },
+                                child: const Text(
+                                  'Sign In',
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
-                            ],
-                          )
-                  ],
-                ),
-              )
-            ],
-          ),
+                            ),
+                            const SizedBox(width: 24.0),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Register(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Register',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

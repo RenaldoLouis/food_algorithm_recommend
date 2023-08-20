@@ -15,22 +15,20 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Background(
       child: SingleChildScrollView(
-        child: Row(
-          children: [
-            const Expanded(
-              child: LoginScreenTopImage(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const LoginScreenTopImage(),
+            Row(
+              children: const [
+                Spacer(),
+                Expanded(
+                  flex: 8,
+                  child: LoginForm(),
+                ),
+                Spacer(),
+              ],
             ),
-            // Expanded(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: const [
-            //       SizedBox(
-            //         width: 450,
-            //         child: LoginForm(),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
