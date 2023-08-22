@@ -25,14 +25,14 @@ class _LoginFormState extends State<LoginForm> {
   bool _isProcessing = false;
 
   Future<FirebaseApp> _initializeFirebase() async {
-    setState(() {
-      _isProcessing = true;
-    });
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      setState(() {
+        _isProcessing = true;
+      });
       Future.delayed(const Duration(milliseconds: 2500), () {
         setState(() {
           _isProcessing = false;
@@ -46,7 +46,6 @@ class _LoginFormState extends State<LoginForm> {
         );
       });
     }
-
     return firebaseApp;
   }
 
@@ -65,13 +64,6 @@ class _LoginFormState extends State<LoginForm> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 24.0),
-                  child: Text(
-                    'Login',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                ),
                 Form(
                   key: _formKey,
                   child: Column(
