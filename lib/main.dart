@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_algorithm_recommend/pages/login/login.dart';
+import 'package:food_algorithm_recommend/pages/login/Login.dart';
+import 'package:food_algorithm_recommend/pages/splashScreen/SplashScreen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Login(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -30,7 +30,8 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        automaticallyImplyLeading: false,
+        title: const Text('Profile'),
       ),
       body: Center(
         child: Column(
