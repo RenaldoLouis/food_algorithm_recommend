@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_algorithm_recommend/components/background.dart';
+import 'package:food_algorithm_recommend/pages/inputHealthDataPage.dart/InputHealthDataPage.dart.dart';
 import 'package:food_algorithm_recommend/pages/login/Login.dart';
 import 'package:food_algorithm_recommend/pages/profile/Profile.dart';
 import 'package:food_algorithm_recommend/pages/register/sign_up_top_image.dart';
@@ -149,11 +150,10 @@ class _RegisterState extends State<Register> {
                                                           .pushAndRemoveUntil(
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              Profile(
-                                                                  user: user),
+                                                              const InputHealthDataPage(),
                                                         ),
                                                         ModalRoute.withName(
-                                                            '/'),
+                                                            '/inputUserInfo'),
                                                       );
                                                     }
                                                   } else {
