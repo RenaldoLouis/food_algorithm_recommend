@@ -21,6 +21,11 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def flutterminSdkVersion = localProperties.getProperty('flutter.minSdkVersion')
+if (flutterminSdkVersion == null) {
+    flutterminSdkVersion = '1.0'
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -47,10 +52,11 @@ android {
         applicationId "com.example.food_algorithm_recommend"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion flutterminSdkVersion.toInteger()
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -68,4 +74,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

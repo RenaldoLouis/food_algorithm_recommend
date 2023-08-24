@@ -150,7 +150,8 @@ class _RegisterState extends State<Register> {
                                                           .pushAndRemoveUntil(
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const InputHealthDataPage(),
+                                                              InputHealthDataPage(
+                                                                  user: user),
                                                         ),
                                                         ModalRoute.withName(
                                                             '/inputUserInfo'),

@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_algorithm_recommend/providers/userInfoProviders.dart';
 
 class InputHealthDataPage extends ConsumerStatefulWidget {
-  const InputHealthDataPage({super.key});
+  final User user;
+
+  const InputHealthDataPage({Key? key, required this.user}) : super(key: key);
 
   @override
   _InputHealthDataPageState createState() => _InputHealthDataPageState();
@@ -12,6 +16,18 @@ class InputHealthDataPage extends ConsumerStatefulWidget {
 class _InputHealthDataPageState extends ConsumerState<InputHealthDataPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  void _handleInputDataToDatabase() async {
+    final userInfo = <String, String>{"height": "210", "weight": "80"};
+
+    firebaseFirestore
+        .collection("userHealthInfoCollection")
+        .doc(widget.user.displayName)
+        .set(userInfo)
+        .onError((e, _) => print("Error writing document: $e"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +53,7 @@ class _InputHealthDataPageState extends ConsumerState<InputHealthDataPage> {
                     ref.read(userHealthInfoProvider.notifier);
                 userInfoNotifier.setUserInfo(
                     _nameController.text, _emailController.text);
+                _handleInputDataToDatabase();
               },
               child: Text('Save'),
             ),
