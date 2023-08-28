@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_algorithm_recommend/components/background.dart';
 import 'package:food_algorithm_recommend/pages/inputHealthDataPage.dart/InputHealthDataPage.dart.dart';
 import 'package:food_algorithm_recommend/pages/login/Login.dart';
-import 'package:food_algorithm_recommend/pages/profile/Profile.dart';
+import 'package:food_algorithm_recommend/pages/Home/Home.dart';
 import 'package:food_algorithm_recommend/pages/register/sign_up_top_image.dart';
 import 'package:food_algorithm_recommend/utils/Validator.dart';
 import 'package:food_algorithm_recommend/utils/fire_auth.dart';

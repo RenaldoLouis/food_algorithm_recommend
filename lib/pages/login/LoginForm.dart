@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_algorithm_recommend/pages/profile/Profile.dart';
+import 'package:food_algorithm_recommend/pages/Home/Home.dart';
 import 'package:food_algorithm_recommend/pages/register/Register.dart';
 import 'package:food_algorithm_recommend/utils/Validator.dart';
 import 'package:food_algorithm_recommend/utils/fire_auth.dart';
@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) {
-              return Profile(user: user); // Your Profile screen widget
+              return Home(user: user);
             },
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
@@ -150,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
                                                 .pushReplacement(
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    Profile(user: user),
+                                                    Home(user: user),
                                               ),
                                             );
                                           }
