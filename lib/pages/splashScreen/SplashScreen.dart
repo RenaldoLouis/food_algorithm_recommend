@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
               _controller
                 ..duration = compoes.duration
                 ..forward().then(
-                  (value) => Navigator.push(
+                  (value) => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Login(),
