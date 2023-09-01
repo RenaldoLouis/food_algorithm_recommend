@@ -14,7 +14,7 @@ final userHealthInfoProvider =
 class UserInfoNotifier extends StateNotifier<UserHealthInfo?> {
   UserInfoNotifier() : super(null);
 
-  void setUserInfo(String name, String email) {
-    state = UserHealthInfo(name, email);
+  void setUserInfo(int weight, int height) {
+    state = UserHealthInfo(weight, height);
   }
 }

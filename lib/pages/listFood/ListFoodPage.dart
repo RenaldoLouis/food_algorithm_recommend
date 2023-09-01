@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_algorithm_recommend/models/product.dart';
+import 'package:food_algorithm_recommend/providers/userInfoProviders.dart';
 import 'package:food_algorithm_recommend/theme.dart';
 
-class ListFoodPage extends StatefulWidget {
+class ListFoodPage extends ConsumerStatefulWidget {
   const ListFoodPage({super.key});
 
   @override
-  State<ListFoodPage> createState() => _ListFoodPageState();
+  _ListFoodPageState createState() => _ListFoodPageState();
 }
 
-class _ListFoodPageState extends State<ListFoodPage> {
+class _ListFoodPageState extends ConsumerState<ListFoodPage> {
   final List<String> categories = ['Food', 'Fruits', 'Sports', 'Vehicle'];
 
   List<String> selectedCatogories = [];
@@ -20,9 +22,11 @@ class _ListFoodPageState extends State<ListFoodPage> {
           selectedCatogories.contains(product.category);
     }).toList();
 
+    final userInfo = ref.watch(userHealthInfoProvider);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("GoFood"),
+        title: Text('User Info: ${userInfo!.weight}, ${userInfo!.height}'),
         backgroundColor: green1,
       ),
       body: Column(

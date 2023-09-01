@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_algorithm_recommend/pages/login/Login.dart';
 import 'package:food_algorithm_recommend/theme.dart';
 
 class Search extends StatelessWidget {
@@ -41,7 +43,16 @@ class Search extends StatelessWidget {
           const SizedBox(
             width: 15,
           ),
-          SizedBox(
+          TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const Login(),
+                ),
+              );
+            },
+            child: SizedBox(
               width: 35,
               height: 35,
               child: Stack(
@@ -68,7 +79,9 @@ class Search extends StatelessWidget {
                         ),
                       ))
                 ],
-              ))
+              ),
+            ),
+          )
         ],
       ),
     );

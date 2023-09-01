@@ -1,19 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_algorithm_recommend/pages/Home/Home.dart';
 import 'package:food_algorithm_recommend/pages/register/Register.dart';
+import 'package:food_algorithm_recommend/providers/userInfoProviders.dart';
 import 'package:food_algorithm_recommend/utils/Validator.dart';
 import 'package:food_algorithm_recommend/utils/fire_auth.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends ConsumerState<LoginForm> {
+  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final _formKey = GlobalKey<FormState>();
 
   final _emailTextController = TextEditingController();
@@ -30,7 +34,34 @@ class _LoginFormState extends State<LoginForm> {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      // Future.delayed(const Duration(milliseconds: 2500), () {
+      //di sini ditambahin proses get data dari forebase terus siman di userInfoProvidre untuk heigh sama weightnya
+
+      final docRef = firebaseFirestore
+          .collection("userHealthInfoCollection")
+          .doc(user.uid);
+
+      DocumentSnapshot documentSnapshot = await docRef.get();
+
+      // Check if the document exists
+      if (documentSnapshot.exists) {
+        // Access the data in the document
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+
+        // You can now use 'data' to access fields in the document
+        int weightValue = data['weight'];
+        int heightValue = data['height'];
+
+        final userInfoNotifier = ref.read(userHealthInfoProvider.notifier);
+
+        userInfoNotifier.setUserInfo(
+          weightValue,
+          heightValue,
+        );
+      } else {
+        print('Document does not exist');
+      }
+
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
@@ -47,7 +78,6 @@ class _LoginFormState extends State<LoginForm> {
           },
         ),
       );
-      // });
     }
     return firebaseApp;
   }

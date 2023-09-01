@@ -1,6 +1,6 @@
 class UserHealthInfo {
-  final String name;
-  final String email;
+  final int weight;
+  final int height;
 
-  UserHealthInfo(this.name, this.email);
+  UserHealthInfo(this.weight, this.height);
 }
