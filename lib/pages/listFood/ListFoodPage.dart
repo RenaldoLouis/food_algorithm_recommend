@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_algorithm_recommend/models/product.dart';
@@ -15,6 +17,28 @@ class _ListFoodPageState extends ConsumerState<ListFoodPage> {
   final List<String> categories = ['Food', 'Fruits', 'Sports', 'Vehicle'];
 
   List<String> selectedCatogories = [];
+
+  String BMIResult = '';
+
+  Future<String> calculateBMI(int weight, int height) async {
+    double res = (weight / (height * height));
+    return res.toStringAsFixed(2);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final userInfo = ref.watch(userHealthInfoProvider);
+      String value = await calculateBMI(userInfo!.weight, userInfo.height);
+      if (mounted) {
+        setState(() {
+          BMIResult = value;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final filteredProducts = productList.where((product) {
@@ -22,11 +46,9 @@ class _ListFoodPageState extends ConsumerState<ListFoodPage> {
           selectedCatogories.contains(product.category);
     }).toList();
 
-    final userInfo = ref.watch(userHealthInfoProvider);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Info: ${userInfo!.weight}, ${userInfo!.height}'),
+        title: Text('User Info BMI: ${BMIResult}'),
         backgroundColor: green1,
       ),
       body: Column(
