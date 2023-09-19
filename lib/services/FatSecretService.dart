@@ -32,7 +32,6 @@ _token() async {
       getURL,
       options: Options(
         headers: header,
-        contentType: 'application/x-www-form-urlencoded',
       ),
       data: formData,
     );
@@ -88,7 +87,7 @@ class FatSecretService {
       'Authorization': await _token(),
     };
 
-    List<dynamic> recipe;
+    List<dynamic> recipe = [];
 
     try {
       final res = await dio.get(
@@ -99,10 +98,10 @@ class FatSecretService {
         ),
       );
       var recipes = res.data['recipe_types'];
-      if (recipes['recipe_type'] != null) {
-        recipe = recipes['recipe_type'].toList();
-      } else {
-        recipe = [];
+      if (recipes != null) {
+        if (recipes['recipe_type'] != null) {
+          recipe = recipes['recipe_type'].toList();
+        }
       }
     } on DioError catch (e) {
       recipe = [];

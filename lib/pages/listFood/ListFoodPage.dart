@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_algorithm_recommend/models/FoodCategoryModel.dart';
 import 'package:food_algorithm_recommend/models/product.dart';
+import 'package:food_algorithm_recommend/pages/listFood/ProductContainer.dart';
 import 'package:food_algorithm_recommend/providers/userInfoProviders.dart';
 import 'package:food_algorithm_recommend/services/FatSecretService.dart';
 import 'package:food_algorithm_recommend/theme.dart';
@@ -101,36 +102,54 @@ class _ListFoodPageState extends ConsumerState<ListFoodPage> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: filteredProducts.length,
-                  itemBuilder: (context, index) {
-                    final product = filteredProducts[index];
-                    return Card(
-                      elevation: 8.0,
-                      margin: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration:
-                            const BoxDecoration(color: Colors.indigoAccent),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          title: Text(
-                            product.name,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            product.category,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontStyle: FontStyle.italic),
-                          ),
-                        ),
+                child: GridView.count(
+                  shrinkWrap: false,
+                  primary: false,
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  children: <Widget>[
+                    ...filteredProducts.map(
+                      (product) => ProductContainer(
+                        image: 'assets/images/biryani.png',
+                        price: 12,
+                        name: product.name,
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
+
+                // ListView.builder(
+                //   itemCount: filteredProducts.length,
+                //   itemBuilder: (context, index) {
+                //     final product = filteredProducts[index];
+                //     return Card(
+                //       elevation: 8.0,
+                //       margin: const EdgeInsets.all(8.0),
+                //       child: Container(
+                //         decoration:
+                //             const BoxDecoration(color: Colors.indigoAccent),
+                //         child: ListTile(
+                //           contentPadding: const EdgeInsets.symmetric(
+                //               horizontal: 10, vertical: 10),
+                //           title: Text(
+                //             product.name,
+                //             style: const TextStyle(
+                //                 color: Colors.white,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //           subtitle: Text(
+                //             product.category,
+                //             style: const TextStyle(
+                //                 color: Colors.white,
+                //                 fontStyle: FontStyle.italic),
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                // ),
               ),
             ],
           );
